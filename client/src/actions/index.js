@@ -7,11 +7,23 @@ import { FETCH_USER } from "./types";
 //after we have gotten the users data
 export const fetchUser = () => {
   return function(dispatch) {
+    // automatically will use the reducers defined in client/index.js
     axios
       .get("/api/current_user")
       .then(res => dispatch({ type: FETCH_USER, payload: res.data }));
   };
 };
+
+/*// Traditional way without redux-thunk now returning only the action
+  // and continuing wih the dispatch function
+  export const fetchUser = () => {
+  const request = axios.get("/api/current");
+  
+  return {
+    type: FETCH_USER,
+    payload: request
+  };
+}*/
 
 //ES2017 or something
 /*

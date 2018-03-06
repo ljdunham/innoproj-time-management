@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 //React uses className instead of the standard css class
 class Header extends Component {
+  // this.props.auth is now set from the mapStateToProps according to the state we got
+  // from the authReducer
   renderContent() {
     switch (this.props.auth) {
       case null:
@@ -44,6 +46,9 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
+  // The auth property is going to be produced by state.auth
+  // state.auth comes from the reducers where we defined the name auth
+  // for the authReducer.js which provides us with 3 different states
   return { auth: state.auth };
 }
 
