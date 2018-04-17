@@ -1,10 +1,13 @@
 const passport = require("passport");
+const requireLogin = require("../middlewares/requireLogin.js");
 
 module.exports = app => {
   app.get(
     "/auth/google",
     passport.authenticate("google", {
-      scope: ["profile", "email", "https://www.googleapis.com/auth/calendar"]
+      scope: ["profile", "email", "https://www.googleapis.com/auth/calendar"],
+      accessType: "offline",
+      prompt: "consent"
     })
   );
 

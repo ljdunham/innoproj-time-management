@@ -3,9 +3,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
+const bodyParser = require("body-parser");
 const keys = require("./config/keys");
 // require defined user model / schema
 require("./models/User");
+require("./models/Task");
 // require passport setup which we built in to our application
 require("./services/passport");
 
@@ -14,6 +16,7 @@ mongoose.connect(keys.mongoURI);
 // our app object
 const app = express();
 
+app.use(bodyParser.json());
 // Define middlewares
 // Tell the app to use cookies
 app.use(
@@ -29,6 +32,7 @@ app.use(passport.session());
 
 // requires routes exported from authRoutes to be used in the app object
 require("./routes/authRoutes")(app);
+require("./routes/calendarRoutes")(app);
 
 //Production environment
 

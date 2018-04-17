@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose; //ES2016
 
 const userSchema = new Schema({
-  googleId: String
+  googleId: String,
+  refreshToken: String,
+  accessToken: String,
+  accessTokenExpiresIn: Date
 });
 
 //Create new collection called users

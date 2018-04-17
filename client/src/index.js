@@ -8,6 +8,10 @@ import reduxThunk from "redux-thunk";
 import App from "./components/App";
 import reducers from "./reducers";
 
+//Development testing from browser console
+import axios from "axios";
+window.axios = axios;
+
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 // div with id root will be in the production build's index.html file to display app
