@@ -35,7 +35,7 @@ require("./routes/authRoutes")(app);
 require("./routes/calendarRoutes")(app);
 
 //Production environment
-//Just testing
+//Just testing and testing
 if (process.env.NODE_ENV === "production") {
   // Express will serve production assets
   // like our main.js file, or main.css file!
