@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose; //ES2016
 
 const userSchema = new Schema({
+  userName: String,
   googleId: String,
   refreshToken: String,
   accessToken: String,

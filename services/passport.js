@@ -48,6 +48,7 @@ const google = new GoogleStrategy(
       } else {
         // we don't have a user record with this ID, make a new record
         new User({
+          userName: profile.name.givenName,
           googleId: profile.id,
           refreshToken: refreshToken,
           accessToken: accessToken,
