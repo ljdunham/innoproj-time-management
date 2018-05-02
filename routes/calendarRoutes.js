@@ -26,6 +26,17 @@ module.exports = app => {
     });
   });
 
+  app.post("/api/deleteTask", requireLogin, (req, res) => {
+    const { taskid } = req.body;
+    Task.find({ _id: taskid })
+      .then(task => {
+        Task.deleteOne({ _id: taskid }).then(task => res.send(task));
+      })
+      .catch(err => {
+        res.send({ Reason: "Task not found", Error: err });
+      });
+  });
+
   app.post("/api/addTask", requireLogin, async (req, res) => {
     //console.log(req.body);
     const { title, description, start, end } = req.body;
