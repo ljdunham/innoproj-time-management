@@ -7,7 +7,7 @@ const q = require("q");
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
 const Task = mongoose.model("tasks");
-
+const axios = require("axios");
 const getAccessToken = require("../utils/getAccessToken");
 
 module.exports = app => {
@@ -28,13 +28,19 @@ module.exports = app => {
 
   app.post("/api/deleteTask", requireLogin, (req, res) => {
     const { taskid } = req.body;
-    Task.find({ _id: taskid })
-      .then(task => {
-        Task.deleteOne({ _id: taskid }).then(task => res.send(task));
-      })
-      .catch(err => {
-        res.send({ Reason: "Task not found", Error: err });
-      });
+
+    axios
+      .post("/api/completeTask", { taskid: taskid })
+      .then(
+        Task.find({ _id: taskid })
+          .then(task => {
+            Task.deleteOne({ _id: taskid }).then(task => res.send(task));
+          })
+          .catch(err => {
+            res.send({ Reason: "Task not found", Error: err });
+          })
+      )
+      .catch(error => res.send({ Reason: "DeleteIssue", Error: error }));
   });
 
   app.post("/api/addTask", requireLogin, async (req, res) => {
