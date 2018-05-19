@@ -7,7 +7,8 @@ import * as actions from "../actions"; //importing all actions to actions object
 import Header from "./Header";
 import Landing from "./Landing";
 import Dashboard from "./Dashboard";
-
+import AddButton from "./AddButton";
+import TaskForm from "./TaskForm";
 //Another way is to not import the { Component } and just write extends React.Component
 
 class App extends Component {
@@ -26,7 +27,7 @@ class App extends Component {
           <div>
             <Header />
             <Route exact={true} path="/" component={Landing} />
-            <Route path="/main" component={Dashboard} />
+            <Route path="/main/viewTask" component={Dashboard} />
           </div>
         </BrowserRouter>
       </div>
