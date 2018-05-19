@@ -20,7 +20,7 @@ class Header extends Component {
         return (
           <div>
             <li>
-              <a href="/main">Dashboard</a>
+              <a href="/main/viewTask">Dashboard</a>
             </li>
             <li>
               <a href="/api/logout">Logout</a>
