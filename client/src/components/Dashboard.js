@@ -12,8 +12,10 @@ class Dashboard extends Component {
       rows: [],
       showForm: false,
       showTaskDetail: false,
+      showDoneTask: false,
     };
     this.getAllTasks = this.getAllTasks.bind(this);
+    this.getDoneTasks = this.getDoneTasks.bind(this);
     this.clearAllTasks = this.clearAllTasks.bind(this);
     this.addNewTask = this.addNewTask.bind(this);
     this.handleSingleTask = this.handleSingleTask.bind(this);
@@ -21,6 +23,10 @@ class Dashboard extends Component {
 
   getAllTasks() {
     axios.get('/api/getTasks').then(response => { this.setState({ rows: response.data }); console.log(response) }).catch(error => alert('please login'))
+  }
+
+  getDoneTasks() {
+    this.setState({ showDoneTask: this.state.showDoneTask ? false : true });
   }
 
   clearAllTasks() {
@@ -31,11 +37,11 @@ class Dashboard extends Component {
 
   addNewTask() {
     /* this.setState({ {this.state.showForm ? false : true }}) */
-    this.setState({ showForm: true });
+    this.setState({ showForm: this.state.showForm ? false : true });
   }
 
-  handleSingleTask(){
-    this.setState({showTaskDetail: this.state.showTaskDetail ? false : true})
+  handleSingleTask() {
+    this.setState({ showTaskDetail: this.state.showTaskDetail ? false : true })
   }
 
 
@@ -49,8 +55,15 @@ class Dashboard extends Component {
       <span className="sr-only">Loading...</span></div>) : (<div></div>);
     */
     const clear_all_button = (<button className="btn-floating pulse right" onClick={this.clearAllTasks} type="button"><i className="small material-icons">clear_all</i></button>);
-    const add_button = (<a href="#task_form" className="btn-floating btn-medium waves-effect waves-light red right" onClick={this.addNewTask} ><i className="material-icons">add</i></a>)
-    const task_detail = this.state.showTaskDetail ? (<p>show task </p>) : <div></div>
+    const add_button = (<a href="#task_form" className="btn-floating btn-medium waves-effect waves-light red right" onClick={this.addNewTask} ><i className="material-icons">add</i></a>);
+    const task_detail = this.state.showTaskDetail ? (<p>show task </p>) : <div></div>;
+    const tasks_array = this.state.rows || [];
+    const done_task_array = tasks_array.filter(task => task.complete == true);
+
+    const done_task_list = done_task_array.length == 0 ? <div><p>You have no completed task</p></div> : <div><ul className="collection">
+      {done_task_array.map((row, index) => <li key={row.title + index} className="collection-item"><div>{row.title}</div></li>)}
+    </ul></div>
+    const view_done_task = this.state.showDoneTask ? done_task_list : <div></div>;
 
     return (
       <div>
@@ -67,11 +80,20 @@ class Dashboard extends Component {
 
         <div id="task-list">
           <ul className="collection">
-            {this.state.rows.map((row, index) => <li key={row.title + index} className="collection-item"><div>{row.title}<a onClick={this.handleSingleTask} role="button" className="secondary-content"><i className="material-icons">arrow_drop_down</i></a>{task_detail}</div></li>)}
+            {this.state.rows.map((row, index) => <li key={row.title + index} className="collection-item"><div>{row.title}<a id={row._id} onClick={this.handleSingleTask} role="button" className="secondary-content"><i className="material-icons">arrow_drop_down</i></a>{task_detail}</div></li>)}
           </ul>
           {clear_all_button}
 
         </div>
+
+        <div>
+          <button id="view_completed_task" className="btn waves-effect waves-light" type="button" onClick={this.getDoneTasks}>Your completed tasks</button>
+          <div id="done-task-list">
+            {view_done_task}
+          </div>
+
+        </div>
+
         { /*{hidden_info} */}
         {this.state.showForm ? <TaskForm refresh={this.getAllTasks} /> : <div></div>}
 
