@@ -7,8 +7,7 @@ import * as actions from "../actions"; //importing all actions to actions object
 import Header from "./Header";
 import Landing from "./Landing";
 import Dashboard from "./Dashboard";
-import AddButton from "./AddButton";
-import TaskForm from "./TaskForm";
+
 //Another way is to not import the { Component } and just write extends React.Component
 
 class App extends Component {
@@ -38,4 +37,7 @@ class App extends Component {
 // actions are assigned to the App component as props
 // in other words the wiring is been completed and we can use e.g fetchUser() from
 // this.props.
-export default connect(null, actions)(App);
+export default connect(
+  null,
+  actions
+)(App);
