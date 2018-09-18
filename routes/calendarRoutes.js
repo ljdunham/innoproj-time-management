@@ -28,19 +28,18 @@ module.exports = app => {
 
   app.post("/api/deleteTask", requireLogin, (req, res) => {
     const { taskid } = req.body;
-
-    axios
-      .post("/api/completeTask", { taskid: taskid })
-      .then(
-        Task.find({ _id: taskid })
-          .then(task => {
-            Task.deleteOne({ _id: taskid }).then(task => res.send(task));
-          })
-          .catch(err => {
-            res.send({ Reason: "Task not found", Error: err });
-          })
-      )
-      .catch(error => res.send({ Reason: "DeleteIssue", Error: error }));
+    console.log(taskid);
+    try {
+      Task.find({ _id: taskid })
+        .then(task => {
+          Task.deleteOne({ _id: taskid }).then(task => res.send(task));
+        })
+        .catch(err => {
+          res.send({ Reason: "Task not found", err });
+        });
+    } catch (err) {
+      res.send({ Reason: "Something went wrong", err });
+    }
   });
 
   app.post("/api/addTask", requireLogin, async (req, res) => {

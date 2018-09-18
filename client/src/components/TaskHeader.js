@@ -6,7 +6,9 @@ class TaskHeader extends Component {
       <thead>
         <tr>
           <th>Task</th>
+          <th>Info</th>
           <th>Action</th>
+          <th />
         </tr>
       </thead>
     );

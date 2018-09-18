@@ -1,11 +1,10 @@
 import _ from "lodash";
 import React, { Component } from "react";
-import TaskHeader from "./TaskHeader";
-import TaskListItem from "./TaskListItem";
+import ReminderItem from "./ReminderItem";
 
 //Change index etc.
 
-class TaskList extends Component {
+class ReminderItemList extends Component {
   // {...row} is the same as
   // function(row) {
   //    return <TaskListItem />
@@ -13,20 +12,21 @@ class TaskList extends Component {
   // task = {todo.task} isCompleted = {todo.isCompleted}
 
   renderItems() {
-    console.log("rows" + this.props.rows);
-    return _.map(this.props.rows, row => (
-      <TaskListItem key={row._id} {...row} {...this.props} />
+    return _.map(this.props.reminders, reminder => (
+      <ReminderItem
+        key={reminder.taskid + reminder.title}
+        {...reminder}
+        {...this.props}
+      />
     ));
   }
-
   render() {
     return (
       <table>
-        <TaskHeader />
         <tbody>{this.renderItems()}</tbody>
       </table>
     );
   }
 }
 
-export default TaskList;
+export default ReminderItemList;

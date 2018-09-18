@@ -34,6 +34,7 @@ class Dashboard extends Component {
             rows={this.state.rows}
             deleteTask={this.deleteTask.bind(this)}
             completeTask={this.completeTask.bind(this)}
+            addReminder={this.addReminder.bind(this)}
           />
         );
     }
@@ -41,6 +42,29 @@ class Dashboard extends Component {
 
   createTask() {
     this.setState({ tasklist: false });
+  }
+
+  addReminder(task) {
+    //console.log(task);
+    var time = task.date + " " + task.start;
+    console.log(time);
+    var reminder = [
+      {
+        title: task.title,
+        taskid: task.id,
+        start: new Date(time),
+        method: task.method,
+        minutes: task.minutes
+      }
+    ];
+
+    console.log(reminder);
+    axios
+      .post("/api/addReminder", reminder)
+      .then(response => {
+        this.getAllTasks();
+      })
+      .catch(error => console.log(error));
   }
 
   getAllTasks() {
@@ -54,6 +78,7 @@ class Dashboard extends Component {
 
   deleteTask(id) {
     var task = { taskid: id };
+    console.log(task);
     axios
       .post("/api/deleteTask", task)
       .then(response => {
@@ -94,7 +119,7 @@ class Dashboard extends Component {
     return (
       <div>
         <div className="text-center">
-          <h3>Dashboard, welcome {this.state.username} </h3>
+          <h4>Welcome {this.state.username} </h4>
         </div>
         <button
           className="btn waves-effect waves-light"

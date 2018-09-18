@@ -28,6 +28,7 @@
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
     "passport-oauth2-refresh": "^1.0.0",
-    "q": "^1.5.1"
+    "q": "^1.5.1",
+    "reactjs-popup": "^1.2.0"
   }
 }
