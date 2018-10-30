@@ -7,7 +7,6 @@ const q = require("q");
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
 const Task = mongoose.model("tasks");
-const axios = require("axios");
 const getAccessToken = require("../utils/getAccessToken");
 
 module.exports = app => {
